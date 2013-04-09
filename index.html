@@ -11,14 +11,57 @@
         var $body = $('body');
         $body.html('');
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
+        // var index = streams.home.length - 1;
+        // while(index >= 0){
+        //   var tweet = streams.home[index];
+        //   var $tweet = $('<div></div>');
+        //   $tweet.text('@' + tweet.user + ': ' + tweet.message);
+        //   $tweet.appendTo($body);
+        //   index -= 1;
+        // }
+
+        
+
+        $body.append('<button id="newTweeter">New Tweet</button>');
+
+
+
+        function addTweetOnClick () {
+          var d = new Date();
+          var hh = d.getHours();
+          var m = d.getMinutes();
+          var s = d.getSeconds();
+          var dd = "AM";
+          var h = hh;
+          
+          if (h >= 12) {
+            h = hh-12;
+            dd = "PM";
+          }
+          
+          if (h == 0) {
+            h = 12;
+          }
+          m = m<10?"0"+m:m;
+
+          s = s<10?"0"+s:s;
+
+
+
+          var timePosted = h + ":" + m + ":" + s + dd;
+          var index = streams.home.length-1;
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
+          $tweet.text(timePosted + ' @' + tweet.user + ': ' + tweet.message);
           $tweet.appendTo($body);
-          index -= 1;
-        }
+        };
+        
+        $("#newTweeter").click(addTweetOnClick);
+
+
+
+        
+
 
       });
 
