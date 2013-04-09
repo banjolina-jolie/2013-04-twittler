@@ -6,6 +6,9 @@
     <link href='http://fonts.googleapis.com/css?family=Spicy+Rice' rel='stylesheet' type='text/css'>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <meta charset="utf-8"/> 
   </head>
@@ -27,10 +30,11 @@
 
         
         $body.append('<h1 id="twittlerTitle">twittler</h1>');
-        $body.append('<div class="actualTweets"></div>')
-        $('div.actualTweets').append("<input id='writeOwnTweet' type='text' value=' chirp chirp'>");
-        $('div.actualTweets').append('<input id="submit-btn" type="submit" value="post"></br>');
-        $('div.actualTweets').append('<button id="newTweeter">random tweet</button>');
+        $body.append('<div class="actualTweets" id="buttonsAndInput"></div>')
+        $body.append('<div class="actualTweets" id="bodyOfTweets"></div>')
+        $('div#buttonsAndInput').append("<input id='writeOwnTweet' type='text' placeholder=' chirp chirp'>");
+        $('div#buttonsAndInput').append('<input class="btn" id="submit-btn" type="submit" value="post"></br>');
+        $('div#buttonsAndInput').append('<button class="btn btn-danger" id="newTweeter">random tweet</button>');
 
 
 
@@ -61,7 +65,7 @@
           var tweet = streams.home[index];
           var $tweet = $('<div class="actualTweets"></div>');
           $tweet.text(timePosted + ' @' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+          $tweet.prependTo($('div#bodyOfTweets'));
         };
         
         
@@ -91,7 +95,7 @@
         var $tweet = $('<div class="actualTweets"></div>');
         $tweet.text(timePosted + '@me: ' + ownTweet);
         if (ownTweet) {
-          $tweet.appendTo($body);
+          $tweet.prependTo($('div#bodyOfTweets'));
         } else {
           return;
         }
