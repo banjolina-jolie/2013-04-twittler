@@ -29,7 +29,7 @@
         $body.append('<h1 id="twittlerTitle">twittler</h1>');
         $body.append('<div class="actualTweets"></div>')
         $('div.actualTweets').append("<input id='writeOwnTweet' type='text' value=' chirp chirp'>");
-        $('div.actualTweets').append('<input id="submit-btn" type="submit" value="tweet it!"></br>');
+        $('div.actualTweets').append('<input id="submit-btn" type="submit" value="post"></br>');
         $('div.actualTweets').append('<button id="newTweeter">random tweet</button>');
 
 
@@ -89,7 +89,7 @@
         var timePosted = h + ":" + m + ":" + s + dd;
         var ownTweet = $('#writeOwnTweet').val();
         var $tweet = $('<div class="actualTweets"></div>');
-        $tweet.text(timePosted + '@You: ' + ownTweet);
+        $tweet.text(timePosted + '@me: ' + ownTweet);
         if (ownTweet) {
           $tweet.appendTo($body);
         } else {

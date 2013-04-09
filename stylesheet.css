@@ -5,16 +5,19 @@ body {
 #twittlerTitle {
 	font-family: 'Spicy Rice', cursive;
 	text-align: center;
+	font-size: 42px;
 }
 
 #writeOwnTweet {
 	margin-bottom: 15px;
 	display: inline-block;
 	width: 200px;
+	height: 18px;
+	border-radius: 120px;
 }
 
 #submit-btn {
-	margin-bottom: 15px;
+
 	display: inline;
 	text-align: center;
 }
@@ -26,4 +29,5 @@ body {
 .actualTweets {
 	margin-bottom: 15px;
 	text-align: center;
+	font-size: 18px;
 }
