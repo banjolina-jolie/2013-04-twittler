@@ -1,0 +1,29 @@
+body {
+	background-color: #dae7be;
+	font-family: 'Special Elite', cursive;
+}
+#twittlerTitle {
+	font-family: 'Spicy Rice', cursive;
+	text-align: center;
+}
+
+#writeOwnTweet {
+	margin-bottom: 15px;
+	display: inline-block;
+	width: 200px;
+}
+
+#submit-btn {
+	margin-bottom: 15px;
+	display: inline;
+	text-align: center;
+}
+
+#newTweeter {
+	margin-bottom: 20px;
+}
+
+.actualTweets {
+	margin-bottom: 15px;
+	text-align: center;
+}

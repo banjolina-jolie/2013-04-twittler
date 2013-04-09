@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Twittler!</title>
+    <link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Spicy+Rice' rel='stylesheet' type='text/css'>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <meta charset="utf-8"/> 
   </head>
   <body>
     <script>
@@ -21,8 +26,11 @@
         // }
 
         
-
-        $body.append('<button id="newTweeter">New Tweet</button>');
+        $body.append('<h1 id="twittlerTitle">twittler</h1>');
+        $body.append('<div class="actualTweets"></div>')
+        $('div.actualTweets').append("<input id='writeOwnTweet' type='text' value=' chirp chirp'>");
+        $('div.actualTweets').append('<input id="submit-btn" type="submit" value="tweet it!"></br>');
+        $('div.actualTweets').append('<button id="newTweeter">random tweet</button>');
 
 
 
@@ -51,16 +59,62 @@
           var timePosted = h + ":" + m + ":" + s + dd;
           var index = streams.home.length-1;
           var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
+          var $tweet = $('<div class="actualTweets"></div>');
           $tweet.text(timePosted + ' @' + tweet.user + ': ' + tweet.message);
           $tweet.appendTo($body);
         };
         
-        $("#newTweeter").click(addTweetOnClick);
+        
+        function submitOwnTweet () {
+          var d = new Date();
+          var hh = d.getHours();
+          var m = d.getMinutes();
+          var s = d.getSeconds();
+          var dd = "AM";
+          var h = hh;
+          
+          if (h >= 12) {
+            h = hh-12;
+            dd = "PM";
+          }
+          
+          if (h == 0) {
+            h = 12;
+          }
+          m = m<10?"0"+m:m;
 
+          s = s<10?"0"+s:s;
+        
 
+        var timePosted = h + ":" + m + ":" + s + dd;
+        var ownTweet = $('#writeOwnTweet').val();
+        var $tweet = $('<div class="actualTweets"></div>');
+        $tweet.text(timePosted + '@You: ' + ownTweet);
+        if (ownTweet) {
+          $tweet.appendTo($body);
+        } else {
+          return;
+        }
 
         
+      }
+      
+      function eraseAfterClick() {
+        $("#writeOwnTweet").val(null);
+      }
+
+
+
+        $("#newTweeter").click(addTweetOnClick);
+        
+        // $("#submit-btn").click(submitOwnTweet, function(){
+        //   $("#writeOwnTweet").val(null);
+        // });
+
+        $("#submit-btn").click(submitOwnTweet);
+        $("#submit-btn").click(eraseAfterClick);
+
+
 
 
       });
