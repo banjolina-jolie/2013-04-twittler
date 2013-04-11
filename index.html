@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang=en>
   <head>
     <title>Twittler!</title>
     <link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
@@ -16,26 +16,52 @@
     <script>
 
       $(document).ready(function(){
+
         var $body = $('body');
+        
         $body.html('');
 
-        // var index = streams.home.length - 1;
-        // while(index >= 0){
-        //   var tweet = streams.home[index];
-        //   var $tweet = $('<div></div>');
-        //   $tweet.text('@' + tweet.user + ': ' + tweet.message);
-        //   $tweet.appendTo($body);
-        //   index -= 1;
-        // }
+        
+        $body.append('<h1 id="twittlerTitle">twittler</h1>\n<div class="stuffContainer" id="buttonsAndInput"></div>\n<div class="stuffContainer" id="bodyOfTweets"></div>');
+
+        $('div#buttonsAndInput').append('<input id="writeOwnTweet" type="text" placeholder=" chirp chirp">\n<input class="btn" id="submit-btn" type="submit" value="post"></br>\n<button class="btn btn-danger" id="newTweeter">random tweet</button>');
+
+
+        var index = streams.home.length - 1;
+        while(index >= 0){
+          
+          var d = new Date();
+          var hh = d.getHours();
+          var m = d.getMinutes();
+          var s = d.getSeconds();
+          var dd = "AM";
+          var h = hh;
+          
+          if (h >= 12) {
+            h = hh-12;
+            dd = "PM";
+          }
+          
+          if (h == 0) {
+            h = 12;
+          }
+          m = m<10?"0"+m:m;
+
+          s = s<10?"0"+s:s;
+
+          var timePosted = h + ":" + m + ":" + s + dd;
+
+
+
+
+          var tweet = streams.home[index];
+          var $tweet = $('<div class="actualTweets"></div>');
+          $tweet.html(timePosted + '<a href=" ' + tweet.user + '.html">@' + tweet.user + '</a>: ' + tweet.message);
+          $tweet.appendTo($('div#bodyOfTweets'));
+          index -= 1;
+        }
 
         
-        $body.append('<h1 id="twittlerTitle">twittler</h1>');
-        $body.append('<div class="actualTweets" id="buttonsAndInput"></div>')
-        $body.append('<div class="actualTweets" id="bodyOfTweets"></div>')
-        $('div#buttonsAndInput').append("<input id='writeOwnTweet' type='text' placeholder=' chirp chirp'>");
-        $('div#buttonsAndInput').append('<input class="btn" id="submit-btn" type="submit" value="post"></br>');
-        $('div#buttonsAndInput').append('<button class="btn btn-danger" id="newTweeter">random tweet</button>');
-
 
 
         function addTweetOnClick () {
@@ -58,18 +84,44 @@
 
           s = s<10?"0"+s:s;
 
-
-
           var timePosted = h + ":" + m + ":" + s + dd;
           var index = streams.home.length-1;
           var tweet = streams.home[index];
-          var $tweet = $('<div class="actualTweets"></div>');
-          $tweet.text(timePosted + ' @' + tweet.user + ': ' + tweet.message);
+          
+
+          var $tweet = $('<div class="actualTweets" data-user="' + tweet.user + '"></div>')
+          $tweet.html(timePosted + '<a href=" ' + tweet.user + '.html">@' + tweet.user + '</a>: ' + tweet.message);
+          //$tweet.html(timePosted + ' @' + tweet.user + ': ' + tweet.message);
           $tweet.prependTo($('div#bodyOfTweets'));
+
+          // function showUsersTweets() {
+          //   var bigUser = this.getAttribute('data-user');
+         
+          //   while(index >= 0){
+          //     var tweet = streams.home[index];
+          //     var $tweet = $('<div class="actualTweets"></div>');
+          //     $tweet.text(timePosted + '@' + bigUser + ': ' + tweet.message);
+          //     $tweet.prependTo($('div#bodyOfTweets'));
+          //     index -= 1;
+          //   }
+          // }
+
+          // function clearOtherTweets() {
+          //   $('#bodyOfTweets').empty();
+          // }
+
+          // function pullUpTimeline() {
+          //   clearOtherTweets();
+          //   showUsersTweets();
+          // }
+
+
+
+          // $(".actualTweets").click(showUsersTweets);
         };
         
         
-        function submitOwnTweet () {
+        function printTweet () {
           var d = new Date();
           var hh = d.getHours();
           var m = d.getMinutes();
@@ -90,38 +142,54 @@
           s = s<10?"0"+s:s;
         
 
-        var timePosted = h + ":" + m + ":" + s + dd;
-        var ownTweet = $('#writeOwnTweet').val();
-        var $tweet = $('<div class="actualTweets"></div>');
-        $tweet.text(timePosted + '@me: ' + ownTweet);
-        if (ownTweet) {
-          $tweet.prependTo($('div#bodyOfTweets'));
-        } else {
-          return;
+          var timePosted = h + ":" + m + ":" + s + dd;
+          var ownTweet = $('#writeOwnTweet').val();
+          var $tweet = $('<div class="actualTweets" data-user="me"></div>');
+          $tweet.html(timePosted + '<a href="">@me</a>: ' + ownTweet);
+        
+          if (ownTweet) {
+            $tweet.prependTo($('div#bodyOfTweets'));
+          }
+
+          function getUserAttr() {
+            var bigUser = this.getAttribute('data-user');
+            console.log(bigUser);
+          }
+
+          $(".actualTweets").click(getUserAttr);
+        }
+      
+        function eraseAfterClick() {
+        $("#writeOwnTweet").val(null);
+        };
+
+        function submitUserInput() {
+          printTweet();
+          eraseAfterClick();
         }
 
-        
-      }
-      
-      function eraseAfterClick() {
-        $("#writeOwnTweet").val(null);
-      }
-
-
-
         $("#newTweeter").click(addTweetOnClick);
-        
-        // $("#submit-btn").click(submitOwnTweet, function(){
-        //   $("#writeOwnTweet").val(null);
-        // });
+        $("#submit-btn").click(submitUserInput);
 
-        $("#submit-btn").click(submitOwnTweet);
-        $("#submit-btn").click(eraseAfterClick);
+        $("#writeOwnTweet").bind('keypress', function(e) {
+          if(e.keyCode==13){
+            submitUserInput();
+          }
+        });
+
+
+
+
+
+
+        
+
 
 
 
 
       });
+
 
     </script>
   </body>

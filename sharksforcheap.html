@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang=en>
+  <head>
+    <title>Shark's Twittler!</title>
+    <link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Spicy+Rice' rel='stylesheet' type='text/css'>
+    <script src="jquery.js"></script>
+    <script src="data_generator.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <meta charset="utf-8"/> 
+  </head>
+  <body>
+    <script>
+    $(document).ready(function(){
+        
+        var $body = $('body');
+      
+        $body.append('<h1 id="twittlerTitle">sharksforcheap\'s twittler</h1>\n<div class="stuffContainer" id="buttonsAndInput"></div>\n<div class="stuffContainer" id="bodyOfTweets"></div>');
+
+        $('div#buttonsAndInput').append('<a href="index.html"><button class="btn btn-danger" id="goHome">Home</button></a>');
+
+        var index = streams.home.length - 1;
+        while(index >= 0){
+
+          var d = new Date();
+          var hh = d.getHours();
+          var m = d.getMinutes();
+          var s = d.getSeconds();
+          var dd = "AM";
+          var h = hh;
+          
+          if (h >= 12) {
+            h = hh-12;
+            dd = "PM";
+          }
+          
+          if (h == 0) {
+            h = 12;
+          }
+          m = m<10?"0"+m:m;
+
+          s = s<10?"0"+s:s;
+
+          var timePosted = h + ":" + m + ":" + s + dd;
+          var tweet = streams.home[index];
+          var $tweet = $('<div class="actualTweets"></div>');
+          $tweet.html(timePosted+'@sharksforcheap: ' + tweet.message);
+          $tweet.appendTo($body);
+          index -= 1;
+        }
+      });
+    </script>
+  </body>
+</html>

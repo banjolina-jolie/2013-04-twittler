@@ -6,6 +6,7 @@ body {
 	font-family: 'Spicy Rice', cursive;
 	text-align: center;
 	font-size: 42px;
+	margin-bottom: 15px;
 }
 
 #writeOwnTweet {
@@ -33,4 +34,15 @@ body {
 	margin-bottom: 15px;
 	text-align: center;
 	font-size: 18px;
+}
+
+.stuffContainer {
+	margin-bottom: 15px;
+	text-align: center;
+	font-size: 18px;
+}
+
+#goHome {
+	margin-bottom: 20px;
+	border-radius: 100px;
 }
