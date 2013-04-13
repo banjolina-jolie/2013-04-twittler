@@ -22,7 +22,7 @@
         $body.html('');
 
         
-        $body.append('<h1 id="twittlerTitle">twittler</h1>\n<div class="stuffContainer" id="buttonsAndInput"></div>\n<div class="stuffContainer" id="bodyOfTweets"></div>');
+        $body.append('<h1 id="twittlerTitle">twittler</h1>\n<div class="stuffContainer" id="buttonsAndInput"></div>\n<div class="stuffContainer" id="bodyOfTweets"></div>\n<div class="stuffContainer" id="timeline"></div>');
 
         $('div#buttonsAndInput').append('<input id="writeOwnTweet" type="text" placeholder=" chirp chirp">\n<input class="btn" id="submit-btn" type="submit" value="post"></br>\n<button class="btn btn-danger" id="newTweeter">random tweet</button>');
 
@@ -56,7 +56,7 @@
 
           var tweet = streams.home[index];
           var $tweet = $('<div class="actualTweets"></div>');
-          $tweet.html(timePosted + '<a href=" ' + tweet.user + '.html">@' + tweet.user + '</a>: ' + tweet.message);
+          $tweet.html(timePosted + '<a class="timelineLink" data-user="' + tweet.user + '">@' + tweet.user + '</a>: ' + tweet.message);
           $tweet.appendTo($('div#bodyOfTweets'));
           index -= 1;
         }
@@ -89,35 +89,10 @@
           var tweet = streams.home[index];
           
 
-          var $tweet = $('<div class="actualTweets" data-user="' + tweet.user + '"></div>')
-          $tweet.html(timePosted + '<a href=" ' + tweet.user + '.html">@' + tweet.user + '</a>: ' + tweet.message);
+          var $tweet = $('<div class="actualTweets"></div>')
+          $tweet.html(timePosted + '<a class="timelineLink" data-user="' + tweet.user + '">@' + tweet.user + '</a>: ' + tweet.message);
           //$tweet.html(timePosted + ' @' + tweet.user + ': ' + tweet.message);
           $tweet.prependTo($('div#bodyOfTweets'));
-
-          // function showUsersTweets() {
-          //   var bigUser = this.getAttribute('data-user');
-         
-          //   while(index >= 0){
-          //     var tweet = streams.home[index];
-          //     var $tweet = $('<div class="actualTweets"></div>');
-          //     $tweet.text(timePosted + '@' + bigUser + ': ' + tweet.message);
-          //     $tweet.prependTo($('div#bodyOfTweets'));
-          //     index -= 1;
-          //   }
-          // }
-
-          // function clearOtherTweets() {
-          //   $('#bodyOfTweets').empty();
-          // }
-
-          // function pullUpTimeline() {
-          //   clearOtherTweets();
-          //   showUsersTweets();
-          // }
-
-
-
-          // $(".actualTweets").click(showUsersTweets);
         };
         
         
@@ -144,19 +119,12 @@
 
           var timePosted = h + ":" + m + ":" + s + dd;
           var ownTweet = $('#writeOwnTweet').val();
-          var $tweet = $('<div class="actualTweets" data-user="me"></div>');
-          $tweet.html(timePosted + '<a href="">@me</a>: ' + ownTweet);
+          var $tweet = $('<div class="actualTweets" ></div>');
+          $tweet.html(timePosted + '<a class="timelineLink" data-user="me">@me</a>: ' + ownTweet);
         
           if (ownTweet) {
             $tweet.prependTo($('div#bodyOfTweets'));
           }
-
-          function getUserAttr() {
-            var bigUser = this.getAttribute('data-user');
-            console.log(bigUser);
-          }
-
-          $(".actualTweets").click(getUserAttr);
         }
       
         function eraseAfterClick() {
@@ -178,18 +146,21 @@
         });
 
 
-
-
-
-
-        
-
-
-
-
-
+        $(".timelineLink").on('click', function(e){
+          e.preventDefault();
+          var user = $(this).attr('data-user');
+          $('#bodyOfTweets').empty();
+          for(var key in streams.users){
+            if(key == user){
+              $.each(streams.users[key], function(key, value){
+                $('#timeline').append('<div class="actualTweets" class="timelineLink" >'+timePosted + '<a class="timelineLink" data-user="' + value.user + '">@' + value.user + '</a>: ' + value.message + '</div>');
+              });
+            }
+          }
       });
 
+
+});
 
     </script>
   </body>
