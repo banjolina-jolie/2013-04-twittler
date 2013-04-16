@@ -62,8 +62,6 @@
         }
 
         
-
-
         function addTweetOnClick () {
           var d = new Date();
           var hh = d.getHours();
@@ -91,11 +89,19 @@
 
           var $tweet = $('<div class="actualTweets"></div>')
           $tweet.html(timePosted + '<a class="timelineLink" data-user="' + tweet.user + '">@' + tweet.user + '</a>: ' + tweet.message);
-          //$tweet.html(timePosted + ' @' + tweet.user + ': ' + tweet.message);
           $tweet.prependTo($('div#bodyOfTweets'));
         };
         
         
+
+        var writeTweet = function(message){
+          var twert = {};
+          twert.user = "me";
+          twert.message = message;
+          addTweet(twert);
+        };
+
+
         function printTweet () {
           var d = new Date();
           var hh = d.getHours();
@@ -121,14 +127,20 @@
           var ownTweet = $('#writeOwnTweet').val();
           var $tweet = $('<div class="actualTweets" ></div>');
           $tweet.html(timePosted + '<a class="timelineLink" data-user="me">@me</a>: ' + ownTweet);
+          // streams.users[me] = [];
+          // streams.users[me].push(ownTweet);
         
           if (ownTweet) {
             $tweet.prependTo($('div#bodyOfTweets'));
           }
+
+          // writeTweet(ownTweet);
+
+
         }
       
         function eraseAfterClick() {
-        $("#writeOwnTweet").val(null);
+          $("#writeOwnTweet").val(null);
         };
 
         function submitUserInput() {
@@ -146,18 +158,20 @@
         });
 
 
-        $(".timelineLink").on('click', function(e){
-          e.preventDefault();
-          var user = $(this).attr('data-user');
+        $(".timelineLink").on('click', function(){
+          var user = $(this).data('user'); 
           $('#bodyOfTweets').empty();
+          $("#buttonsAndInput").empty();
           for(var key in streams.users){
-            if(key == user){
+            if(key === user){
               $.each(streams.users[key], function(key, value){
-                $('#timeline').append('<div class="actualTweets" class="timelineLink" >'+timePosted + '<a class="timelineLink" data-user="' + value.user + '">@' + value.user + '</a>: ' + value.message + '</div>');
+                $('#bodyOfTweets').append('<div class="actualTweets">' + timePosted + '<a class="timelineLink" data-user="' + value.user + '">@' + value.user + '</a>: ' + value.message + '</div>');
               });
             }
           }
       });
+
+
 
 
 });
