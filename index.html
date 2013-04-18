@@ -2,6 +2,7 @@
 <html lang=en>
   <head>
     <title>Twittler!</title>
+    <meta charset="utf-8"/> 
     <link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Spicy+Rice' rel='stylesheet' type='text/css'>
     <script src="jquery.js"></script>
@@ -10,7 +11,6 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
-    <meta charset="utf-8"/> 
   </head>
   <body>
     <script>
@@ -20,7 +20,6 @@
         var $body = $('body');
         
         $body.html('');
-
         
         $body.append('<h1 id="twittlerTitle">twittler</h1>\n<div class="stuffContainer" id="buttonsAndInput"></div>\n<div class="stuffContainer" id="bodyOfTweets"></div>\n<div class="stuffContainer" id="timeline"></div>');
 
@@ -52,15 +51,12 @@
           var timePosted = h + ":" + m + ":" + s + dd;
 
 
-
-
           var tweet = streams.home[index];
           var $tweet = $('<div class="actualTweets"></div>');
           $tweet.html(timePosted + '<a class="timelineLink" data-user="' + tweet.user + '">@' + tweet.user + '</a>: ' + tweet.message);
-          $tweet.appendTo($('div#bodyOfTweets'));
+          $tweet.prependTo($('div#bodyOfTweets'));
           index -= 1;
         }
-
         
         function addTweetOnClick () {
           var d = new Date();
@@ -85,22 +81,18 @@
           var timePosted = h + ":" + m + ":" + s + dd;
           var index = streams.home.length-1;
           var tweet = streams.home[index];
-          
 
           var $tweet = $('<div class="actualTweets"></div>')
           $tweet.html(timePosted + '<a class="timelineLink" data-user="' + tweet.user + '">@' + tweet.user + '</a>: ' + tweet.message);
           $tweet.prependTo($('div#bodyOfTweets'));
         };
         
-        
-
         var writeTweet = function(message){
           var twert = {};
           twert.user = "me";
           twert.message = message;
           addTweet(twert);
         };
-
 
         function printTweet () {
           var d = new Date();
@@ -122,21 +114,18 @@
 
           s = s<10?"0"+s:s;
         
-
           var timePosted = h + ":" + m + ":" + s + dd;
           var ownTweet = $('#writeOwnTweet').val();
           var $tweet = $('<div class="actualTweets" ></div>');
           $tweet.html(timePosted + '<a class="timelineLink" data-user="me">@me</a>: ' + ownTweet);
+          
           // streams.users[me] = [];
           // streams.users[me].push(ownTweet);
-        
+          
           if (ownTweet) {
             $tweet.prependTo($('div#bodyOfTweets'));
           }
-
           // writeTweet(ownTweet);
-
-
         }
       
         function eraseAfterClick() {
@@ -148,8 +137,8 @@
           eraseAfterClick();
         }
 
-        $("#newTweeter").click(addTweetOnClick);
-        $("#submit-btn").click(submitUserInput);
+        $("#newTweeter").on('click', addTweetOnClick);
+        $("#submit-btn").on('click', submitUserInput);
 
         $("#writeOwnTweet").bind('keypress', function(e) {
           if(e.keyCode==13){
@@ -157,23 +146,25 @@
           }
         });
 
-
-        $(".timelineLink").on('click', function(){
+        function pullUpTimeline(event) {
+          event.preventDefault();
           var user = $(this).data('user'); 
-          $('#bodyOfTweets').empty();
+          $('#bodyOfTweets').html("");
           $("#buttonsAndInput").empty();
           for(var key in streams.users){
             if(key === user){
               $.each(streams.users[key], function(key, value){
-                $('#bodyOfTweets').append('<div class="actualTweets">' + timePosted + '<a class="timelineLink" data-user="' + value.user + '">@' + value.user + '</a>: ' + value.message + '</div>');
+                $('#bodyOfTweets').prepend('<div class="actualTweets">' + timePosted + '<a class="timelineLink" data-user="' + value.user + '">@' + value.user + '</a>: ' + value.message + '</div>');
               });
             }
           }
-      });
+          var index = streams.home.length-1;
+          var tweet = streams.home[index];
+          console.log(index);
+          console.log(tweet);
+        }
 
-
-
-
+        $("a").on("click", pullUpTimeline);
 });
 
     </script>
