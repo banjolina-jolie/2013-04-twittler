@@ -23,14 +23,13 @@ var addTime = function(d) {
 }
 
 var addTweetOnClick = function() {
+  generateRandomTweet();
   var theTime = addTime();
   var index = streams.home.length-1;
   var tweet = streams.home[index];
-
   var $tweet = $('<div class="actualTweets"></div>')
   $tweet.html(theTime + '<a class="timelineLink" data-user="' + tweet.user + '">@' + tweet.user + '</a>: ' + tweet.message);
   $tweet.prependTo($('div#bodyOfTweets'));
-  generateRandomTweet();
   $("a").on("click", pullUpTimeline);
 };
 
