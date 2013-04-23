@@ -43,6 +43,11 @@ body {
 }
 
 #goHome {
+	text-align: left;
+	margin-top: 8px;
+	margin-left: 500px;
+	position: absolute;
+	display: inline-block;
 	margin-bottom: 20px;
 	border-radius: 100px;
 }

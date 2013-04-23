@@ -11,9 +11,8 @@ streams.users.shawndrost = [];
 streams.users.sharksforcheap = [];
 streams.users.mracus = [];
 streams.users.douglascalhoun = [];
-// streams.users.me = [];
 window.users = Object.keys(streams.users);
-
+streams.users.me = [];
 // utility function for adding tweets to our data structures
 var addTweet = function(newTweet){
   var username = newTweet.user;
@@ -55,16 +54,17 @@ var scheduleNextTweet = function(){
   generateRandomTweet();
   setTimeout(scheduleNextTweet, Math.random() * 1500);
 };
-scheduleNextTweet();
+//scheduleNextTweet();
 
 // utility function for letting students add "write a tweet" functionality
 // (note: not used by the rest of this file.)
 var writeTweet = function(message){
-  if(!visitor){
-    throw new Error('set the global visitor property!');
-  }
+  // if(!visitor){
+  //   throw new Error('set the global visitor property!');
+  // }
   var tweet = {};
-  tweet.user = visitor;
+  tweet.user = "me";
   tweet.message = message;
+  tweet.created_at = new Date();
   addTweet(tweet);
 };
