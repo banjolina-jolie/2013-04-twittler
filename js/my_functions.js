@@ -1,16 +1,16 @@
 var addTime = function(d) {
-  d = d || new Date(), 
+  d = d || new Date(),
   hh = d.getHours(),
   m = d.getMinutes(),
   s = d.getSeconds(),
   dd = "AM",
   h = hh;
-  
+
   if (h >= 12) {
     h = hh-12;
     dd = "PM";
   }
-  
+
   if (h == 0) {
     h = 12;
   }
@@ -34,13 +34,12 @@ var addTweetOnClick = function() {
 };
 
 var printTweet = function() {
-  var theTime = addTime();        
+  var theTime = addTime();
   var ownTweet = $('#writeOwnTweet').val();
   var $tweet = $('<div class="actualTweets" ></div>');
-  $tweet.html(theTime + '<a class="timelineLink" data-user="me">@me</a>: ' + ownTweet);  
-  
+  $tweet.html(theTime + '<a class="timelineLink" data-user="me">@me</a>: ' + ownTweet);
 
-  
+
   if (ownTweet) {
     $tweet.prependTo($('div#bodyOfTweets'));
     writeTweet(ownTweet);
@@ -54,8 +53,8 @@ var goBackHome = function() {
   $('#bodyOfTweets').html("");
 
   var index = streams.home.length - 1;
-        
-  while(index >= 0){          
+
+  while(index >= 0){
     var theTime = addTime();
     var tweet = streams.home[index];
     var $tweet = $('<div class="actualTweets"></div>');
@@ -68,8 +67,7 @@ var goBackHome = function() {
 
 
 var pullUpTimeline = function() {
-  //event.preventDefault();
-  var user = $(this).data('user'); 
+  var user = $(this).data('user');
   $('#bodyOfTweets').html("");
   $("#buttonsAndInput").hide();
   $('#goHome').show();

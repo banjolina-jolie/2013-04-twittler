@@ -2,7 +2,7 @@
 <html lang=en>
   <head>
     <title>Twittler!</title>
-    <meta charset="utf-8"/> 
+    <meta charset="utf-8"/>
     <link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Spicy+Rice' rel='stylesheet' type='text/css'>
     <script src="jquery.js"></script>
@@ -19,15 +19,14 @@
       $(document).ready(function(){
 
         var $body = $('body');
-                
         $body.append('<input class="btn" id="goHome" type="submit" value="home"><h1 id="twittlerTitle">twittler</h1>\n<div class="stuffContainer" id="buttonsAndInput"></div>\n<div class="stuffContainer" id="bodyOfTweets"></div>\n<div class="stuffContainer" id="timeline"></div>');
 
         $('div#buttonsAndInput').append('<input id="writeOwnTweet" type="text" placeholder=" chirp chirp">\n<input class="btn" id="submit-btn" type="submit" value="post"></br>\n<button class="btn btn-danger" id="newTweeter">random tweet</button>');
         $('#goHome').hide();
 
         var index = streams.home.length - 1;
-        
-        while(index >= 0){          
+
+        while(index >= 0){
           var theTime = addTime();
           var tweet = streams.home[index];
           var $tweet = $('<div class="actualTweets"></div>');
@@ -46,7 +45,7 @@
             submitUserInput();
           }
         });
-});
+      });
 
     </script>
   </body>
